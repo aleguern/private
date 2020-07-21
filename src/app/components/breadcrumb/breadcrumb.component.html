@@ -1,0 +1,29 @@
+<div class="breadcrumb-container" *ngIf="!isMobile" (click)="showAllTimers = !showAllTimers">
+  <ng-container *ngFor="let step of routeListBreadcrumb; let i = index">
+    <div class="step">
+      <div class="upper">
+        <div class="bar-step">
+          <div *ngIf="i > 0" class="bar-step bar bar-{{ getBarStepPercentage('left', i) }} left"></div>
+        </div>
+        <div *ngIf="!validated(i + 1)" class="circle-step left" [ngClass]="{validated: validated(i)}">
+          <p>{{i + 1}}</p>
+        </div>
+        <div *ngIf="validated(i + 1)" class="circle-step left success">
+          <p>{{i + 1}}</p>
+        </div>
+        <div class="bar-step">
+          <div *ngIf="i < 6"
+            class="bar-step bar bar-{{getBarStepPercentage('right', i + 1) == 0 && getBarStepPercentage('left', i) == 100 ? 1 : getBarStepPercentage('right', i + 1)}}">
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <div class="text-step" [ngClass]="{validated: validated(i), afterSteps: !validated(i)}">{{step.name}}</div>
+        <div class="timer" *ngIf="validated(i) || showAllTimers">
+          <ftn-icons [name]="'chrono'" color="#88c648" size="18px"> </ftn-icons>
+          <div>{{ step.time }} minute{{ step.time > 1 ? 's' : '' }}</div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>
